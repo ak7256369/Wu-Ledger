@@ -3,8 +3,9 @@
 This project is optimized for GitHub Codespaces.
 
 ## 1. Initialize the Chain
-Run the setup script to install Ignite, scaffold the chain, and apply the custom AMM module logic.
+> **Note for Codespaces Users:** The environment is automatically set up when the codespace is created. You can skip this step and proceed to "Start the Chain".
 
+If running manually:
 ```bash
 chmod +x setup.sh
 ./setup.sh
