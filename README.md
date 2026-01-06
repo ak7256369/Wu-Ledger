@@ -6,6 +6,7 @@ This project is optimized for GitHub Codespaces.
 > **Note for Codespaces Users:** Once the Codespace opens, you **MUST** run the setup script manually to install dependencies.
 
 ```bash
+chmod +x setup.sh setup_frontend.sh
 ./setup.sh
 ```
 
