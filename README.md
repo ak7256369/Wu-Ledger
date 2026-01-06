@@ -3,11 +3,9 @@
 This project is optimized for GitHub Codespaces.
 
 ## 1. Initialize the Chain
-> **Note for Codespaces Users:** The environment is automatically set up when the codespace is created. You can skip this step and proceed to "Start the Chain".
+> **Note for Codespaces Users:** Once the Codespace opens, you **MUST** run the setup script manually to install dependencies.
 
-If running manually:
 ```bash
-chmod +x setup.sh
 ./setup.sh
 ```
 
