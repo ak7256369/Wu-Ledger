@@ -1,8 +1,7 @@
 {
     "name": "Wu-Ledger",
-    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "image": "mcr.microsoft.com/devcontainers/go:1-1.22-bullseye",
     "features": {
-        "ghcr.io/devcontainers/features/go:1": {},
         "ghcr.io/devcontainers/features/node:1": {}
     },
     "forwardPorts": [
@@ -15,10 +14,8 @@
         "vscode": {
             "extensions": [
                 "golang.go",
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode"
+                "dbaeumer.vscode-eslint"
             ]
         }
-    },
-    "postCreateCommand": "sudo apt-get update && chmod +x setup.sh setup_frontend.sh && ./setup.sh && cd frontend && npm install"
+    }
 }
