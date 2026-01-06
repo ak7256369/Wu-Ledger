@@ -6,13 +6,22 @@
 
 set -e
 
+# Ensure we are in the script's directory
+cd "$(dirname "$0")"
+
+echo ">>> [0/5] Preparing Environment..."
+# Cleanup previous run
+rm -rf chain
+
 echo ">>> [1/5] Installing Ignite CLI..."
 curl https://get.ignite.com/cli! | bash
 
 echo ">>> [2/5] Scaffolding Chain 'ogc-ledger-1'..."
-# Scaffold chain with no default module to keep it clean, we will add market later
-ignite scaffold chain wuledger --no-module --address-prefix ogc
-cd wuledger
+# FIX: Scaffolding to directory 'chain' to avoid name conflicts with parent 'Wu-Ledger'
+# FIX: Using explicit module path
+ignite scaffold chain wuledger --path chain --no-module --address-prefix ogc --module github.com/wuledger/ogc-ledger-1
+
+cd chain
 
 echo ">>> [2.5/5] Configuring Chain ID and Genesis..."
 cat <<EOF > config.yml
@@ -41,13 +50,11 @@ genesis:
 EOF
 
 echo ">>> [3/5] Scaffolding 'market' Module (AMM)..."
-# The market module depends on 'bank' for handling tokens
 ignite scaffold module market --dep bank
 
 echo ">>> [4/5] Applying Doctrine & AMM Logic..."
 
 # 4.1 Define Constants (Types)
-# We overwrite the types to include our specific Pool struct
 cat <<EOF > x/market/types/pool.go
 package types
 
@@ -84,13 +91,13 @@ func (p Pool) GetConstantProduct() sdk.Int {
 EOF
 
 # 4.2 AMM Logic (Keeper)
-# Strict constant product, no fees
+# Note: Update import path to match the new module name if needed, but github.com/wuledger/ogc-ledger-1 is consistent
 cat <<EOF > x/market/keeper/amm.go
 package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"wuledger/x/market/types"
+	"github.com/wuledger/ogc-ledger-1/x/market/types"
 )
 
 // CalculateSwapOutput calculates dy = (y * dx) / (x + dx)
@@ -122,9 +129,5 @@ func (k Keeper) CalculateSwapOutput(ctx sdk.Context, pool types.Pool, amountIn s
 	return amountOut, nil
 }
 EOF
-
-# 4.3 Configure config.toml for fixed validator set (Basic simulation config)
-# In a real genesis, we would manually edit genesis.json, but here we set defaults
-# sed -i 's/stake/uogc/g' config.yml
 
 echo ">>> [5/5] Setup Complete. Run 'ignite chain serve' to start."
