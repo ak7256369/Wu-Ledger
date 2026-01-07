@@ -21,7 +21,7 @@ echo ">>> [2/5] Scaffolding Chain 'ogc-ledger-1'..."
 # FIX: Scaffolding to directory 'chain' to avoid name conflicts with parent 'Wu-Ledger'
 # FIX: Using explicit module path
 # Force update
-ignite scaffold chain wu-ledger --address-prefix ogc --chain-id ogc-ledger-1-address-prefix ogc --module github.com/wuledger/ogc-ledger-1
+ignite scaffold chain wu-ledger --address-prefix ogc --chain-id ogc-ledger-1
 
 cd chain
 
