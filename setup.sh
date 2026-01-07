@@ -10,7 +10,7 @@ echo ">>> [0/5] Preparing Environment..."
 rm -rf wu-ledger
 
 echo ">>> [1/5] Installing Ignite CLI..."
-curl https://get.ignite.com/cli! | bash
+curl https://get.ignite.com/cli! | bash -s -- v28.5.0
 
 echo ">>> [2/5] Scaffolding Chain..."
 ignite scaffold chain wu-ledger \
